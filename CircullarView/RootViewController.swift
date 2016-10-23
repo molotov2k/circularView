@@ -152,16 +152,15 @@ class RootViewController: UITableViewController, UICollectionViewDataSource, UIC
         }
         
         self.collectionView?.setContentOffset(CGPoint.init(x: offsetToCenterMiddleItem, y: 0), animated: true)
-        self.collectionView?.isUserInteractionEnabled = false
-        DispatchQueue.global().async {
-            usleep(250000)
-            DispatchQueue.main.async {
-                let offset = self.initialOffset + self.offsetPerCell * self.middleCategoriesElementIndex
-                self.collectionView?.contentOffset = CGPoint.init(x: offset, y: 0)
-                self.collectionView?.isUserInteractionEnabled = true
-            }
+
+    }
+    
+    
+    override func scrollViewDidEndScrollingAnimation(_ scrollView: UIScrollView) {
+        if !self.collectionHidden {
+            let offset = self.initialOffset + self.offsetPerCell * self.middleCategoriesElementIndex
+            self.collectionView?.setContentOffset(CGPoint.init(x: offset, y: 0), animated: false)
         }
-        
     }
     
     
