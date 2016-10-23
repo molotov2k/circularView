@@ -85,8 +85,7 @@ extension RootViewController {
         self.collectionView?.layoutIfNeeded()
         self.view.addSubview(self.collectionView!)
         self.view.bringSubview(toFront: self.collectionView!)
-        let offset = self.initialOffset + self.offsetPerCell * self.middleCategoriesElementIndex
-        self.collectionView?.contentOffset = CGPoint.init(x: offset, y: 0)
+        self.collectionView?.contentOffset = CGPoint.init(x: self.centeredOffset, y: 0)
     }
     
     
@@ -193,13 +192,15 @@ extension RootViewController {
     
 // MARK - infinite scroll
     
-    func updateCategories(row: Int) {
-        if self.lastCreatedCellRow > row {
+    func moveCategoriesElements(numberOfElementsToMove: Int) {
+        if numberOfElementsToMove > 0 {
             let elementToMove = self.categories.removeLast()
             self.categories.insert(elementToMove, at: 0)
-        } else {
+            self.moveCategoriesElements(numberOfElementsToMove: numberOfElementsToMove - 1)
+        } else if numberOfElementsToMove < 0 {
             let elementToMove = self.categories.removeFirst()
             self.categories.append(elementToMove)
+            self.moveCategoriesElements(numberOfElementsToMove: numberOfElementsToMove + 1)
         }
     }
     

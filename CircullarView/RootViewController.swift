@@ -20,13 +20,18 @@ class RootViewController: UITableViewController, UICollectionViewDataSource, UIC
     
     var collectionHidden = true
     var categories: [String] = []
-    var lastCreatedCellRow = 7
     
-    var initialOffset = -77 // magic numbers for current size, would appreciate if somebody can advice on math
-    var offsetPerCell = 35 // magic number for current size
+    var initialOffset: CGFloat = -77 // magic number for current size, would appreciate if somebody can advice on math
+    var offsetPerCell: CGFloat = 35 // magic number for current size
+    
     var middleCategoriesElementIndex: Int {
         return self.categories.count / 2
     }
+    
+    var centeredOffset: CGFloat {
+        return self.initialOffset + self.offsetPerCell * CGFloat(self.middleCategoriesElementIndex)
+    }
+    
     var middleViewableItemIndex: Int {
         if let collection = self.collectionView {
             let visibleItemIndexes = collection.indexPathsForVisibleItems.sorted()
@@ -53,8 +58,6 @@ class RootViewController: UITableViewController, UICollectionViewDataSource, UIC
         
         return frc
     }()
-    
-    
     
     
     override func viewDidLoad() {
@@ -126,12 +129,6 @@ class RootViewController: UITableViewController, UICollectionViewDataSource, UIC
         cell.label.text = String(name)
         cell.label.adjustsFontSizeToFitWidth = true
         
-        // identifies scroll direction and moves first/last collection element to the end/start
-        if !self.collectionHidden {
-            self.updateCategories(row: indexPath.row)
-        }
-        self.lastCreatedCellRow = indexPath.row
-        
         return cell
     }
     
@@ -142,7 +139,7 @@ class RootViewController: UITableViewController, UICollectionViewDataSource, UIC
     
     
     override func scrollViewWillEndDragging(_ scrollView: UIScrollView, withVelocity velocity: CGPoint, targetContentOffset: UnsafeMutablePointer<CGPoint>) {
-        var offsetToCenterMiddleItem = CGFloat(self.initialOffset + self.offsetPerCell * self.middleViewableItemIndex)
+        var offsetToCenterMiddleItem = self.initialOffset + self.offsetPerCell * CGFloat(self.middleViewableItemIndex)
         let differenceWithActualLocation = offsetToCenterMiddleItem - scrollView.contentOffset.x
         
         if differenceWithActualLocation > CGFloat(self.offsetPerCell / 2) {
@@ -157,10 +154,12 @@ class RootViewController: UITableViewController, UICollectionViewDataSource, UIC
     
     
     override func scrollViewDidEndScrollingAnimation(_ scrollView: UIScrollView) {
-        if !self.collectionHidden {
-            let offset = self.initialOffset + self.offsetPerCell * self.middleCategoriesElementIndex
-            self.collectionView?.setContentOffset(CGPoint.init(x: offset, y: 0), animated: false)
-        }
+        /* tableView doesn't call this method
+         but if something goes wrong check collectionView visible flag */
+        let numberOfCellsScrolled = Int((self.centeredOffset - scrollView.contentOffset.x) / self.offsetPerCell)
+        self.moveCategoriesElements(numberOfElementsToMove: numberOfCellsScrolled)
+        self.collectionView?.reloadData()
+        self.collectionView?.setContentOffset(CGPoint.init(x: self.centeredOffset, y: 0), animated: false)
     }
     
     
