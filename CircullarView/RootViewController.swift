@@ -15,9 +15,27 @@ class RootViewController: UITableViewController, UICollectionViewDataSource, UIC
     let bottomView = UIView()
     let bottomViewMenuButton = UIButton()
     let tintView = UIView()
-    var collectionView: UICollectionView?
-    var collectionHidden = true
     let categoryLabel = UILabel()
+    var collectionView: UICollectionView?
+    
+    var collectionHidden = true
+    var categories: [String] = []
+    var lastCreatedCellRow = 7
+    
+    var initialOffset = -77 // magic numbers for current size, would appreciate if somebody can advice on math
+    var offsetPerCell = 35 // magic number for current size
+    var middleCategoriesElementIndex: Int {
+        return self.categories.count / 2
+    }
+    var middleViewableItemIndex: Int {
+        if let collection = self.collectionView {
+            let visibleItemIndexes = collection.indexPathsForVisibleItems.sorted()
+            let indexPathForMiddleElement = visibleItemIndexes[visibleItemIndexes.count / 2]
+            return indexPathForMiddleElement.row
+        } else {
+            return 0
+        }
+    }
 
     lazy var fetchedResultsController: NSFetchedResultsController<Type> = {
         let context = CoreDataHelper().persistentContainer.viewContext
@@ -36,7 +54,7 @@ class RootViewController: UITableViewController, UICollectionViewDataSource, UIC
         return frc
     }()
     
-    var categories: [String] = []
+    
     
     
     override func viewDidLoad() {
@@ -45,7 +63,7 @@ class RootViewController: UITableViewController, UICollectionViewDataSource, UIC
         self.setupTableView()
         self.setupBottomView()
         self.setupNavigationBar()
-        
+
         do {
             try fetchedResultsController.performFetch()
         } catch {
@@ -102,48 +120,48 @@ class RootViewController: UITableViewController, UICollectionViewDataSource, UIC
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         let cell = collectionView.dequeueReusableCell(withReuseIdentifier: Constants.collectionCellReuseIdentifier, for: indexPath as IndexPath) as! CollectionViewCell
         
-        let name = self.categories[indexPath.row % (self.categories.count / 3)]
+        let name = self.categories[indexPath.row]
         
         cell.backgroundColor = .cyan
-        cell.label.text = String(name[name.startIndex])
+        cell.label.text = String(name)
+        cell.label.adjustsFontSizeToFitWidth = true
+        
+        // identifies scroll direction and moves first/last collection element to the end/start
+        if !self.collectionHidden {
+            self.updateCategories(row: indexPath.row)
+        }
+        self.lastCreatedCellRow = indexPath.row
+        
         return cell
     }
     
     
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
-        print("Selected row: \(indexPath.row)")
+        print("Selected row: \(indexPath.row), offset: \(collectionView.contentOffset.x)")
     }
     
     
-    override func scrollViewDidEndDecelerating(_ scrollView: UIScrollView) {
+    override func scrollViewWillEndDragging(_ scrollView: UIScrollView, withVelocity velocity: CGPoint, targetContentOffset: UnsafeMutablePointer<CGPoint>) {
+        var offsetToCenterMiddleItem = CGFloat(self.initialOffset + self.offsetPerCell * self.middleViewableItemIndex)
+        let differenceWithActualLocation = offsetToCenterMiddleItem - scrollView.contentOffset.x
         
-        print("Visible indexes before scroll: \(self.collectionView?.indexPathsForVisibleItems)")
-        
-        let fullyScrolledContentOffset:CGFloat = self.collectionView!.frame.size.width / CGFloat(self.categories.count / 3)
-        
-        if (scrollView.contentOffset.x >= fullyScrolledContentOffset) {
-            print("scrolling right")
-            if self.categories.count > 2 {
-                self.reverseArray(array: &self.categories, startIndex: 0, endIndex: self.categories.count - 1)
-                self.reverseArray(array: &self.categories, startIndex: 0, endIndex: 1)
-                self.reverseArray(array: &self.categories, startIndex: 2, endIndex: self.categories.count - 1)
-                self.collectionView?.reloadData()
-                let indexPath = IndexPath(row: self.categories.count / 3, section: 0)
-                self.collectionView?.scrollToItem(at: indexPath, at: .right, animated: false)
-            }
-            
-        } else if (scrollView.contentOffset.x == 0) {
-            print("scrolling left")
-            if self.categories.count > 2 {
-                self.reverseArray(array: &self.categories, startIndex: 0, endIndex: self.categories.count - 1)
-                self.reverseArray(array: &self.categories, startIndex: 0, endIndex: self.categories.count - 3)
-                self.reverseArray(array: &self.categories, startIndex: self.categories.count - 2, endIndex: self.categories.count - 1)
-                self.collectionView?.reloadData()
-                let indexPath = IndexPath(row: self.categories.count / 3 * 2, section: 0)
-                self.collectionView?.scrollToItem(at: indexPath, at: .left, animated: false)
-            }
-            
+        if differenceWithActualLocation > CGFloat(self.offsetPerCell / 2) {
+            offsetToCenterMiddleItem -= CGFloat(self.offsetPerCell)
+        } else if differenceWithActualLocation < CGFloat(0 - self.offsetPerCell / 2) {
+            offsetToCenterMiddleItem -= CGFloat(self.offsetPerCell)
         }
+        
+        self.collectionView?.setContentOffset(CGPoint.init(x: offsetToCenterMiddleItem, y: 0), animated: true)
+        self.collectionView?.isUserInteractionEnabled = false
+        DispatchQueue.global().async {
+            usleep(250000)
+            DispatchQueue.main.async {
+                let offset = self.initialOffset + self.offsetPerCell * self.middleCategoriesElementIndex
+                self.collectionView?.contentOffset = CGPoint.init(x: offset, y: 0)
+                self.collectionView?.isUserInteractionEnabled = true
+            }
+        }
+        
     }
     
     

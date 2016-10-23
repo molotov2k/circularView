@@ -58,6 +58,7 @@ extension RootViewController {
     
     
     func setupCollectionView() {
+        self.collectionView?.removeFromSuperview()
         let layout = DSCircularLayout()
         
         let collectionViewFrame = CGRect(x: (self.view.bounds.width - Constants.collectionViewRadius) / 2,
@@ -67,8 +68,8 @@ extension RootViewController {
         
         layout.initWithCentre(CGPoint(x: collectionViewFrame.width / 2, y: collectionViewFrame.height / 2),
                               radius: Constants.collectionViewRadius / 2.5,
-                              itemSize: CGSize(width: 30, height: 30),
-                              andAngularSpacing: 90)
+                              itemSize: CGSize(width: 40, height: 40),
+                              andAngularSpacing: 60)
         layout.setStartAngle(CGFloat(M_PI), endAngle: 0)
         layout.scrollDirection = UICollectionViewScrollDirection.horizontal
         layout.rotateItems = false
@@ -81,12 +82,11 @@ extension RootViewController {
         self.collectionView?.layer.cornerRadius = (self.collectionView?.bounds.width)! / 2
         self.collectionView?.decelerationRate = UIScrollViewDecelerationRateFast
         self.collectionView?.alpha = 0.9
-        self.collectionView?.isPagingEnabled = true
         self.collectionView?.layoutIfNeeded()
-        self.view.addSubview(collectionView!)
-        self.collectionView?.reloadData()
-        let indexPath = IndexPath(row: 7, section: 0)
-        self.collectionView?.scrollToItem(at: indexPath, at: .right, animated: false) // <-- This have no effect! :(
+        self.view.addSubview(self.collectionView!)
+        self.view.bringSubview(toFront: self.collectionView!)
+        let offset = self.initialOffset + self.offsetPerCell * self.middleCategoriesElementIndex
+        self.collectionView?.contentOffset = CGPoint.init(x: offset, y: 0)
     }
     
     
@@ -154,6 +154,7 @@ extension RootViewController {
         self.setupTintView()
         self.setupCollectionView()
         self.setupCategoryLabel()
+        self.view.bringSubview(toFront: self.collectionView!)
 
         UIView.animate(withDuration: 0.5, animations: { 
             self.collectionView?.frame.origin.y -= self.collectionView!.bounds.height / 2
@@ -192,13 +193,14 @@ extension RootViewController {
     
 // MARK - infinite scroll
     
-    func reverseArray(array:inout [String], startIndex:Int, endIndex:Int) {
-        if startIndex >= endIndex {
-            return
+    func updateCategories(row: Int) {
+        if self.lastCreatedCellRow > row {
+            let elementToMove = self.categories.removeLast()
+            self.categories.insert(elementToMove, at: 0)
+        } else {
+            let elementToMove = self.categories.removeFirst()
+            self.categories.append(elementToMove)
         }
-        swap(&array[startIndex], &array[endIndex])
-        
-        reverseArray(array: &array, startIndex: startIndex + 1, endIndex: endIndex - 1)
     }
     
     
