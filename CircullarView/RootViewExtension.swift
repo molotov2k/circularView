@@ -18,7 +18,9 @@ extension RootViewController {
         self.tableView.register(TableViewCell.self, forCellReuseIdentifier: Constants.cellReuseIdentifier)
         self.tableView.dataSource = self
         self.tableView.delegate = self
-        self.tableView.alwaysBounceVertical = false
+        self.tableView.bounces = false
+        self.tableView.allowsSelection = false
+        self.tableView.decelerationRate = UIScrollViewDecelerationRateFast
     }
     
     
@@ -58,9 +60,7 @@ extension RootViewController {
     
     
     func setupCollectionView() {
-        self.collectionView?.removeFromSuperview()
         let layout = DSCircularLayout()
-        
         let collectionViewFrame = CGRect(x: (self.view.bounds.width - Constants.collectionViewRadius) / 2,
                                          y: self.tableView.contentOffset.y + self.view.bounds.height + UIApplication.shared.statusBarFrame.height,
                                          width: Constants.collectionViewRadius,
@@ -190,7 +190,7 @@ extension RootViewController {
     }
   
     
-// MARK - infinite scroll
+// MARK - scrolling stuff
     
     func moveCategoriesElements(numberOfElementsToMove: Int) {
         if numberOfElementsToMove > 0 {
@@ -202,6 +202,38 @@ extension RootViewController {
             self.categories.append(elementToMove)
             self.moveCategoriesElements(numberOfElementsToMove: numberOfElementsToMove + 1)
         }
+    }
+    
+    
+    func scrollTableView() {
+        
+        let currentOffset = self.tableView.contentOffset.y
+        let offsetToNextRow = currentOffset.truncatingRemainder(dividingBy: self.tableViewRowHeight)
+        
+        if offsetToNextRow > self.tableViewRowHeight / 2 {
+            let nextRowOffset = currentOffset - offsetToNextRow + self.tableViewRowHeight
+            self.tableView.setContentOffset(CGPoint.init(x: 0, y: nextRowOffset), animated: true)
+        } else {
+            let previousRowOffset = currentOffset - offsetToNextRow
+            self.tableView.setContentOffset(CGPoint.init(x: 0, y: previousRowOffset), animated: true)
+        }
+        
+    }
+    
+    
+    func scrollCollectionView() {
+        
+        var offsetToCenterMiddleItem = self.initialOffset + self.offsetPerCell * CGFloat(self.middleViewableItemIndex)
+        let differenceWithActualLocation = offsetToCenterMiddleItem - self.collectionView!.contentOffset.x
+        
+        if differenceWithActualLocation > CGFloat(self.offsetPerCell / 2) {
+            offsetToCenterMiddleItem -= CGFloat(self.offsetPerCell)
+        } else if differenceWithActualLocation < CGFloat(0 - self.offsetPerCell / 2) {
+            offsetToCenterMiddleItem -= CGFloat(self.offsetPerCell)
+        }
+        
+        self.collectionView?.setContentOffset(CGPoint.init(x: offsetToCenterMiddleItem, y: 0), animated: true)
+        
     }
     
     

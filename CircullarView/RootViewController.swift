@@ -28,6 +28,10 @@ class RootViewController: UITableViewController, UICollectionViewDataSource, UIC
         return self.categories.count / 2
     }
     
+    var tableViewRowHeight: CGFloat {
+        return self.view.bounds.height / 4
+    }
+    
     var centeredOffset: CGFloat {
         return self.initialOffset + self.offsetPerCell * CGFloat(self.middleCategoriesElementIndex)
     }
@@ -35,6 +39,9 @@ class RootViewController: UITableViewController, UICollectionViewDataSource, UIC
     var middleViewableItemIndex: Int {
         if let collection = self.collectionView {
             let visibleItemIndexes = collection.indexPathsForVisibleItems.sorted()
+            if visibleItemIndexes.isEmpty {
+                return 0
+            }
             let indexPathForMiddleElement = visibleItemIndexes[visibleItemIndexes.count / 2]
             return indexPathForMiddleElement.row
         } else {
@@ -91,7 +98,7 @@ class RootViewController: UITableViewController, UICollectionViewDataSource, UIC
     
     
     override func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
-        return self.view.bounds.height / 4
+        return self.tableViewRowHeight
     }
     
     
@@ -125,41 +132,45 @@ class RootViewController: UITableViewController, UICollectionViewDataSource, UIC
         
         let name = self.categories[indexPath.row]
         
-        cell.backgroundColor = .cyan
         cell.label.text = String(name)
         cell.label.adjustsFontSizeToFitWidth = true
         
         return cell
     }
-    
+
     
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
         print("Selected row: \(indexPath.row), offset: \(collectionView.contentOffset.x)")
     }
     
     
+// MARK - Scroll View overrides
+    
     override func scrollViewWillEndDragging(_ scrollView: UIScrollView, withVelocity velocity: CGPoint, targetContentOffset: UnsafeMutablePointer<CGPoint>) {
-        var offsetToCenterMiddleItem = self.initialOffset + self.offsetPerCell * CGFloat(self.middleViewableItemIndex)
-        let differenceWithActualLocation = offsetToCenterMiddleItem - scrollView.contentOffset.x
-        
-        if differenceWithActualLocation > CGFloat(self.offsetPerCell / 2) {
-            offsetToCenterMiddleItem -= CGFloat(self.offsetPerCell)
-        } else if differenceWithActualLocation < CGFloat(0 - self.offsetPerCell / 2) {
-            offsetToCenterMiddleItem -= CGFloat(self.offsetPerCell)
+        if scrollView == self.collectionView {
+            self.scrollCollectionView()
+        } else if scrollView == self.tableView {
+            self.scrollTableView()
         }
-        
-        self.collectionView?.setContentOffset(CGPoint.init(x: offsetToCenterMiddleItem, y: 0), animated: true)
-
+    }
+    
+    
+    override func scrollViewDidEndDecelerating(_ scrollView: UIScrollView) {
+        if scrollView == self.collectionView {
+            self.scrollCollectionView()
+        } else if scrollView == self.tableView {
+            self.scrollTableView()
+        }
     }
     
     
     override func scrollViewDidEndScrollingAnimation(_ scrollView: UIScrollView) {
-        /* tableView doesn't call this method
-         but if something goes wrong check collectionView visible flag */
-        let numberOfCellsScrolled = Int((self.centeredOffset - scrollView.contentOffset.x) / self.offsetPerCell)
-        self.moveCategoriesElements(numberOfElementsToMove: numberOfCellsScrolled)
-        self.collectionView?.reloadData()
-        self.collectionView?.setContentOffset(CGPoint.init(x: self.centeredOffset, y: 0), animated: false)
+        if scrollView == self.collectionView {
+            let numberOfCellsScrolled = Int((self.centeredOffset - scrollView.contentOffset.x) / self.offsetPerCell)
+            self.moveCategoriesElements(numberOfElementsToMove: numberOfCellsScrolled)
+            self.collectionView?.reloadData()
+            self.collectionView?.setContentOffset(CGPoint.init(x: self.centeredOffset, y: 0), animated: false)
+        }
     }
     
     
