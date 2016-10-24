@@ -39,6 +39,7 @@ class TableViewCell: UITableViewCell {
                                       width: self.bounds.width,
                                       height: imageViewHeight)
         self.cellImageView.backgroundColor = .green
+        self.imageView?.contentMode = .scaleAspectFill
         
         self.nameLabel.frame = CGRect(x: 10,
                                       y: imageViewHeight + 10,

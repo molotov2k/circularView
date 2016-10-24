@@ -66,6 +66,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         
         let greatFood = NSEntityDescription.insertNewObject(forEntityName: Constants.itemEntity, into: context) as! Item
         greatFood.name = "Great Food"
+        greatFood.image = NSData(data: UIImagePNGRepresentation(UIImage(named: "food640")!)!)
         greatFood.originalPrice = 1337
         greatFood.latitude = 0.0
         greatFood.longitude = 0.0
@@ -74,6 +75,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         
         let awesomeBeverage = NSEntityDescription.insertNewObject(forEntityName: Constants.itemEntity, into: context) as! Item
         awesomeBeverage.name = "Awesome Beverage"
+        awesomeBeverage.image = NSData(data: UIImagePNGRepresentation(UIImage(named: "drink640")!)!)
         awesomeBeverage.originalPrice = 31337
         awesomeBeverage.latitude = 0.0
         awesomeBeverage.longitude = 1.0
@@ -82,6 +84,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         
         let neatGadget = NSEntityDescription.insertNewObject(forEntityName: Constants.itemEntity, into: context) as! Item
         neatGadget.name = "Neat Gadget"
+        neatGadget.image = NSData(data: UIImagePNGRepresentation(UIImage(named: "gadget640")!)!)
         neatGadget.originalPrice = 404
         neatGadget.latitude = 2.0
         neatGadget.longitude = 2.0
@@ -90,6 +93,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         
         let quickSession = NSEntityDescription.insertNewObject(forEntityName: Constants.itemEntity, into: context) as! Item
         quickSession.name = "Quick session"
+        quickSession.image = NSData(data: UIImagePNGRepresentation(UIImage(named: "gym640")!)!)
         quickSession.originalPrice = 42
         quickSession.latitude = 3.0
         quickSession.longitude = 3.0
@@ -98,6 +102,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         
         let sweetHome = NSEntityDescription.insertNewObject(forEntityName: Constants.itemEntity, into: context) as! Item
         sweetHome.name = "Home Sweet Home"
+        sweetHome.image = NSData(data: UIImagePNGRepresentation(UIImage(named: "home640")!)!)
         sweetHome.originalPrice = 1000000
         sweetHome.latitude = 4.0
         sweetHome.longitude = 4.0
@@ -105,7 +110,8 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         home.addToItems(sweetHome)
         
         let someBS = NSEntityDescription.insertNewObject(forEntityName: Constants.itemEntity, into: context) as! Item
-        someBS.name = "Where am I?"
+        someBS.name = "Cashing out"
+        someBS.image = NSData(data: UIImagePNGRepresentation(UIImage(named: "other640")!)!)
         someBS.originalPrice = 0
         someBS.latitude = 5.0
         someBS.longitude = 5.0

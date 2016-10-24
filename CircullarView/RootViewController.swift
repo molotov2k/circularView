@@ -26,7 +26,7 @@ class RootViewController: UITableViewController, UICollectionViewDataSource, UIC
     }
     
     var tableViewRowHeight: CGFloat {
-        return self.view.bounds.height / 4
+        return self.view.bounds.height / 3
     }
     
     var centeredOffset: CGFloat {
@@ -89,6 +89,8 @@ class RootViewController: UITableViewController, UICollectionViewDataSource, UIC
         //cell.label.text = itemsArray[indexPath.row].name
         cell.nameLabel.text = itemsArray[0].name
         cell.priceLabel.text = "$" + String(itemsArray[0].originalPrice)
+        let categoryImage = UIImage(data: itemsArray[0].image as! Data)
+        cell.cellImageView.image = categoryImage
         
         return cell
     }

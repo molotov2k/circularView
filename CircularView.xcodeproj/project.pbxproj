@@ -13,7 +13,7 @@
 		3904646F1DAE923200623A92 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 3904646D1DAE923200623A92 /* LaunchScreen.storyboard */; };
 		390464771DAEB5F300623A92 /* CoreDataHelper.swift in Sources */ = {isa = PBXBuildFile; fileRef = 390464761DAEB5F300623A92 /* CoreDataHelper.swift */; };
 		395C9F161DAFF22B009FF499 /* TableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 395C9F151DAFF22B009FF499 /* TableViewCell.swift */; };
-		395C9F181DB05523009FF499 /* RootViewExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 395C9F171DB05523009FF499 /* RootViewExtension.swift */; };
+		395C9F181DB05523009FF499 /* RootViewControllerExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 395C9F171DB05523009FF499 /* RootViewControllerExtension.swift */; };
 		399A09171DB14127003E798D /* CollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 399A09161DB14127003E798D /* CollectionViewCell.swift */; };
 		39A129A61DB2954D005B8D8F /* Constants.swift in Sources */ = {isa = PBXBuildFile; fileRef = 39A129A51DB2954D005B8D8F /* Constants.swift */; };
 		39A129B01DB2DD30005B8D8F /* DSCircularLayout.m in Sources */ = {isa = PBXBuildFile; fileRef = 39A129AF1DB2DD30005B8D8F /* DSCircularLayout.m */; };
@@ -25,7 +25,7 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
-		3904645E1DAE923200623A92 /* CircullarView.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = CircullarView.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		3904645E1DAE923200623A92 /* CircularView.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = CircularView.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		390464611DAE923200623A92 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		390464631DAE923200623A92 /* RootViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RootViewController.swift; sourceTree = "<group>"; };
 		390464691DAE923200623A92 /* CircullarView.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = CircullarView.xcdatamodel; sourceTree = "<group>"; };
@@ -33,10 +33,10 @@
 		390464701DAE923200623A92 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		390464761DAEB5F300623A92 /* CoreDataHelper.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CoreDataHelper.swift; sourceTree = "<group>"; };
 		395C9F151DAFF22B009FF499 /* TableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TableViewCell.swift; sourceTree = "<group>"; };
-		395C9F171DB05523009FF499 /* RootViewExtension.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RootViewExtension.swift; sourceTree = "<group>"; };
+		395C9F171DB05523009FF499 /* RootViewControllerExtension.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RootViewControllerExtension.swift; sourceTree = "<group>"; };
 		399A09161DB14127003E798D /* CollectionViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CollectionViewCell.swift; sourceTree = "<group>"; };
 		39A129A51DB2954D005B8D8F /* Constants.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Constants.swift; sourceTree = "<group>"; };
-		39A129AD1DB2DD30005B8D8F /* CircullarView-Bridging-Header.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "CircullarView-Bridging-Header.h"; sourceTree = "<group>"; };
+		39A129AD1DB2DD30005B8D8F /* CircularView-Bridging-Header.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "CircularView-Bridging-Header.h"; sourceTree = "<group>"; };
 		39A129AE1DB2DD30005B8D8F /* DSCircularLayout.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DSCircularLayout.h; sourceTree = "<group>"; };
 		39A129AF1DB2DD30005B8D8F /* DSCircularLayout.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DSCircularLayout.m; sourceTree = "<group>"; };
 		39BF49211DB3DADF00718D5C /* Type+CoreDataClass.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "Type+CoreDataClass.swift"; sourceTree = "<group>"; };
@@ -68,7 +68,7 @@
 		3904645F1DAE923200623A92 /* Products */ = {
 			isa = PBXGroup;
 			children = (
-				3904645E1DAE923200623A92 /* CircullarView.app */,
+				3904645E1DAE923200623A92 /* CircularView.app */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -88,7 +88,7 @@
 		390464781DAEC33900623A92 /* AppData */ = {
 			isa = PBXGroup;
 			children = (
-				39A129AD1DB2DD30005B8D8F /* CircullarView-Bridging-Header.h */,
+				39A129AD1DB2DD30005B8D8F /* CircularView-Bridging-Header.h */,
 				39A129A51DB2954D005B8D8F /* Constants.swift */,
 				39BF49161DB3CFFE00718D5C /* CoreData */,
 			);
@@ -110,7 +110,7 @@
 			isa = PBXGroup;
 			children = (
 				390464631DAE923200623A92 /* RootViewController.swift */,
-				395C9F171DB05523009FF499 /* RootViewExtension.swift */,
+				395C9F171DB05523009FF499 /* RootViewControllerExtension.swift */,
 			);
 			name = ViewControllers;
 			sourceTree = "<group>";
@@ -142,9 +142,9 @@
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
-		3904645D1DAE923100623A92 /* CircullarView */ = {
+		3904645D1DAE923100623A92 /* CircularView */ = {
 			isa = PBXNativeTarget;
-			buildConfigurationList = 390464731DAE923200623A92 /* Build configuration list for PBXNativeTarget "CircullarView" */;
+			buildConfigurationList = 390464731DAE923200623A92 /* Build configuration list for PBXNativeTarget "CircularView" */;
 			buildPhases = (
 				3904645A1DAE923100623A92 /* Sources */,
 				3904645B1DAE923100623A92 /* Frameworks */,
@@ -154,9 +154,9 @@
 			);
 			dependencies = (
 			);
-			name = CircullarView;
+			name = CircularView;
 			productName = CircullarView;
-			productReference = 3904645E1DAE923200623A92 /* CircullarView.app */;
+			productReference = 3904645E1DAE923200623A92 /* CircularView.app */;
 			productType = "com.apple.product-type.application";
 		};
 /* End PBXNativeTarget section */
@@ -190,7 +190,7 @@
 			projectDirPath = "";
 			projectRoot = "";
 			targets = (
-				3904645D1DAE923100623A92 /* CircullarView */,
+				3904645D1DAE923100623A92 /* CircularView */,
 			);
 		};
 /* End PBXProject section */
@@ -213,7 +213,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				39BF49281DB3DADF00718D5C /* Item+CoreDataProperties.swift in Sources */,
-				395C9F181DB05523009FF499 /* RootViewExtension.swift in Sources */,
+				395C9F181DB05523009FF499 /* RootViewControllerExtension.swift in Sources */,
 				395C9F161DAFF22B009FF499 /* TableViewCell.swift in Sources */,
 				39BF49251DB3DADF00718D5C /* Type+CoreDataClass.swift in Sources */,
 				3904646A1DAE923200623A92 /* CircullarView.xcdatamodeld in Sources */,
@@ -344,7 +344,7 @@
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = com.Anvil.CircularView;
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				SWIFT_OBJC_BRIDGING_HEADER = "CircullarView/CircullarView-Bridging-Header.h";
+				SWIFT_OBJC_BRIDGING_HEADER = "CircullarView/CircularView-Bridging-Header.h";
 				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
 				SWIFT_VERSION = 3.0;
 			};
@@ -359,7 +359,7 @@
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = com.Anvil.CircularView;
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				SWIFT_OBJC_BRIDGING_HEADER = "CircullarView/CircullarView-Bridging-Header.h";
+				SWIFT_OBJC_BRIDGING_HEADER = "CircullarView/CircularView-Bridging-Header.h";
 				SWIFT_VERSION = 3.0;
 			};
 			name = Release;
@@ -376,7 +376,7 @@
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
 		};
-		390464731DAE923200623A92 /* Build configuration list for PBXNativeTarget "CircullarView" */ = {
+		390464731DAE923200623A92 /* Build configuration list for PBXNativeTarget "CircularView" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				390464741DAE923200623A92 /* Debug */,
