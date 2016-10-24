@@ -38,8 +38,11 @@ extension RootViewController {
                                                  width: Constants.bottonViewHeight * 2,
                                                  height: Constants.bottonViewHeight * 2)
         self.bottomViewMenuButton.layer.cornerRadius = self.bottomViewMenuButton.bounds.width / 2
-        self.bottomViewMenuButton.backgroundColor = .blue
+        self.bottomViewMenuButton.backgroundColor = .black
         self.bottomViewMenuButton.addTarget(self, action: #selector(RootViewController.controllerButtonPressed), for: .touchUpInside)
+        let image = UIImage(named: "plus512")?.withRenderingMode(.alwaysTemplate)
+        self.bottomViewMenuButton.setImage(image, for: .normal)
+        self.bottomViewMenuButton.tintColor = .cyan
         
         self.view.addSubview(self.bottomView)
         self.view.addSubview(self.bottomViewMenuButton)
@@ -53,7 +56,7 @@ extension RootViewController {
                                    width: self.view.bounds.width,
                                    height: Constants.navBarHeight)
         self.navBar.alpha = 0.75
-        let navItem = UINavigationItem(title: "THE BAR")
+        let navItem = UINavigationItem(title: "Circular View")
         navBar.setItems([navItem], animated: false)
         self.view.addSubview(self.navBar)
     }
@@ -78,10 +81,10 @@ extension RootViewController {
         self.collectionView?.register(CollectionViewCell.self, forCellWithReuseIdentifier: Constants.collectionCellReuseIdentifier)
         self.collectionView?.dataSource = self
         self.collectionView?.delegate = self
-        self.collectionView?.backgroundColor = .white
+        self.collectionView?.backgroundColor = .black
         self.collectionView?.layer.cornerRadius = (self.collectionView?.bounds.width)! / 2
         self.collectionView?.decelerationRate = UIScrollViewDecelerationRateFast
-        self.collectionView?.alpha = 0.9
+        self.collectionView?.alpha = 0.85
         self.collectionView?.layoutIfNeeded()
         self.view.addSubview(self.collectionView!)
         self.view.bringSubview(toFront: self.collectionView!)
@@ -102,11 +105,12 @@ extension RootViewController {
     
     func setupCategoryLabel() {
         self.categoryLabel.frame = CGRect(x: self.view.bounds.width / 2 - 45,
-                                          y: self.tableView.contentOffset.y + self.view.bounds.height + UIApplication.shared.statusBarFrame.height - Constants.bottonViewHeight - 50 + Constants.collectionViewRadius / 2,
+                                          y: self.tableView.contentOffset.y + self.view.bounds.height + UIApplication.shared.statusBarFrame.height - Constants.bottonViewHeight - 55 + Constants.collectionViewRadius / 2,
                                           width: 90,
                                           height: 30)
         self.categoryLabel.textAlignment = .center
-        self.categoryLabel.textColor = .red
+        self.categoryLabel.textColor = .white
+        self.categoryLabel.text = self.categories[self.middleCategoriesElementIndex].name
         self.view.addSubview(self.categoryLabel)
     }
     
@@ -114,22 +118,16 @@ extension RootViewController {
 // MARK - CoreData functionality
     
     func fetchCategories() {
-        let coreDataHelper = CoreDataHelper()
-        let request:NSFetchRequest<Type> = Type.fetchRequest()
-        let sortDescriptor = NSSortDescriptor(key: Constants.index, ascending: true)
-        request.sortDescriptors = [sortDescriptor]
-        let context = coreDataHelper.persistentContainer.viewContext
         
         do {
-            let types = try context.fetch(request)
-            self.categories.removeAll()
-            for type in types {
-                self.categories.append(type.name)
-            }
-            self.categories += self.categories + self.categories
-            self.collectionView?.reloadData()
+            try self.fetchedResultsController.performFetch()
         } catch {
-            fatalError("Error fetching CoreData categories: \(error)")
+            print("An error occurred")
+            
+        }
+
+        if let objects = self.fetchedResultsController.fetchedObjects {
+            self.categories = objects + objects + objects
         }
         
     }
@@ -153,7 +151,8 @@ extension RootViewController {
         self.setupTintView()
         self.setupCollectionView()
         self.setupCategoryLabel()
-        self.view.bringSubview(toFront: self.collectionView!)
+        let homeCell = self.collectionView?.cellForItem(at: IndexPath.init(row: self.middleCategoriesElementIndex, section: 0))
+        homeCell?.tintColor = .cyan
 
         UIView.animate(withDuration: 0.5, animations: { 
             self.collectionView?.frame.origin.y -= self.collectionView!.bounds.height / 2
@@ -202,6 +201,20 @@ extension RootViewController {
             self.categories.append(elementToMove)
             self.moveCategoriesElements(numberOfElementsToMove: numberOfElementsToMove + 1)
         }
+        
+        UIView.transition(with: self.tableView,
+                          duration: 0.2,
+                          options: [.curveEaseInOut, .transitionCrossDissolve],
+                          animations: {
+            self.tableView.reloadRows(at: self.tableView.indexPathsForVisibleRows!, with: .none)
+        })
+        
+        UIView.transition(with: self.categoryLabel,
+                          duration: 0.2,
+                          options: [.curveEaseInOut, .transitionCrossDissolve],
+                          animations: {
+                            self.categoryLabel.text = self.categories[self.middleCategoriesElementIndex].name
+        })
     }
     
     
@@ -223,13 +236,13 @@ extension RootViewController {
     
     func scrollCollectionView() {
         
-        var offsetToCenterMiddleItem = self.initialOffset + self.offsetPerCell * CGFloat(self.middleViewableItemIndex)
+        var offsetToCenterMiddleItem = Constants.initialOffset + Constants.offsetPerCell * CGFloat(self.middleViewableItemIndex)
         let differenceWithActualLocation = offsetToCenterMiddleItem - self.collectionView!.contentOffset.x
         
-        if differenceWithActualLocation > CGFloat(self.offsetPerCell / 2) {
-            offsetToCenterMiddleItem -= CGFloat(self.offsetPerCell)
-        } else if differenceWithActualLocation < CGFloat(0 - self.offsetPerCell / 2) {
-            offsetToCenterMiddleItem -= CGFloat(self.offsetPerCell)
+        if differenceWithActualLocation > CGFloat(Constants.offsetPerCell / 2) {
+            offsetToCenterMiddleItem -= CGFloat(Constants.offsetPerCell)
+        } else if differenceWithActualLocation < CGFloat(0 - Constants.offsetPerCell / 2) {
+            offsetToCenterMiddleItem -= CGFloat(Constants.offsetPerCell)
         }
         
         self.collectionView?.setContentOffset(CGPoint.init(x: offsetToCenterMiddleItem, y: 0), animated: true)

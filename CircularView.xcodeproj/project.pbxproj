@@ -17,11 +17,11 @@
 		399A09171DB14127003E798D /* CollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 399A09161DB14127003E798D /* CollectionViewCell.swift */; };
 		39A129A61DB2954D005B8D8F /* Constants.swift in Sources */ = {isa = PBXBuildFile; fileRef = 39A129A51DB2954D005B8D8F /* Constants.swift */; };
 		39A129B01DB2DD30005B8D8F /* DSCircularLayout.m in Sources */ = {isa = PBXBuildFile; fileRef = 39A129AF1DB2DD30005B8D8F /* DSCircularLayout.m */; };
-		39BF49201DB3D80F00718D5C /* DataModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 39BF491F1DB3D80F00718D5C /* DataModel.swift */; };
 		39BF49251DB3DADF00718D5C /* Type+CoreDataClass.swift in Sources */ = {isa = PBXBuildFile; fileRef = 39BF49211DB3DADF00718D5C /* Type+CoreDataClass.swift */; };
 		39BF49261DB3DADF00718D5C /* Type+CoreDataProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = 39BF49221DB3DADF00718D5C /* Type+CoreDataProperties.swift */; };
 		39BF49271DB3DADF00718D5C /* Item+CoreDataClass.swift in Sources */ = {isa = PBXBuildFile; fileRef = 39BF49231DB3DADF00718D5C /* Item+CoreDataClass.swift */; };
 		39BF49281DB3DADF00718D5C /* Item+CoreDataProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = 39BF49241DB3DADF00718D5C /* Item+CoreDataProperties.swift */; };
+		39E56C051DBD8D75008E027D /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 39E56C041DBD8D75008E027D /* Images.xcassets */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -39,11 +39,11 @@
 		39A129AD1DB2DD30005B8D8F /* CircullarView-Bridging-Header.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "CircullarView-Bridging-Header.h"; sourceTree = "<group>"; };
 		39A129AE1DB2DD30005B8D8F /* DSCircularLayout.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DSCircularLayout.h; sourceTree = "<group>"; };
 		39A129AF1DB2DD30005B8D8F /* DSCircularLayout.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DSCircularLayout.m; sourceTree = "<group>"; };
-		39BF491F1DB3D80F00718D5C /* DataModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DataModel.swift; sourceTree = "<group>"; };
 		39BF49211DB3DADF00718D5C /* Type+CoreDataClass.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "Type+CoreDataClass.swift"; sourceTree = "<group>"; };
 		39BF49221DB3DADF00718D5C /* Type+CoreDataProperties.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "Type+CoreDataProperties.swift"; sourceTree = "<group>"; };
 		39BF49231DB3DADF00718D5C /* Item+CoreDataClass.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "Item+CoreDataClass.swift"; sourceTree = "<group>"; };
 		39BF49241DB3DADF00718D5C /* Item+CoreDataProperties.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "Item+CoreDataProperties.swift"; sourceTree = "<group>"; };
+		39E56C041DBD8D75008E027D /* Images.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; name = Images.xcassets; path = ../Images.xcassets; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -60,7 +60,7 @@
 		390464551DAE923100623A92 = {
 			isa = PBXGroup;
 			children = (
-				390464601DAE923200623A92 /* CircullarView */,
+				390464601DAE923200623A92 /* CircularView */,
 				3904645F1DAE923200623A92 /* Products */,
 			);
 			sourceTree = "<group>";
@@ -73,7 +73,7 @@
 			name = Products;
 			sourceTree = "<group>";
 		};
-		390464601DAE923200623A92 /* CircullarView */ = {
+		390464601DAE923200623A92 /* CircularView */ = {
 			isa = PBXGroup;
 			children = (
 				390464781DAEC33900623A92 /* AppData */,
@@ -81,7 +81,7 @@
 				3904647A1DAEC37800623A92 /* ViewControllers */,
 				390464791DAEC34E00623A92 /* Support */,
 			);
-			name = CircullarView;
+			name = CircularView;
 			path = CircullarView;
 			sourceTree = "<group>";
 		};
@@ -90,7 +90,6 @@
 			children = (
 				39A129AD1DB2DD30005B8D8F /* CircullarView-Bridging-Header.h */,
 				39A129A51DB2954D005B8D8F /* Constants.swift */,
-				39BF491F1DB3D80F00718D5C /* DataModel.swift */,
 				39BF49161DB3CFFE00718D5C /* CoreData */,
 			);
 			name = AppData;
@@ -101,6 +100,7 @@
 			children = (
 				390464611DAE923200623A92 /* AppDelegate.swift */,
 				390464701DAE923200623A92 /* Info.plist */,
+				39E56C041DBD8D75008E027D /* Images.xcassets */,
 				3904646D1DAE923200623A92 /* LaunchScreen.storyboard */,
 			);
 			name = Support;
@@ -177,7 +177,7 @@
 					};
 				};
 			};
-			buildConfigurationList = 390464591DAE923100623A92 /* Build configuration list for PBXProject "CircullarView" */;
+			buildConfigurationList = 390464591DAE923100623A92 /* Build configuration list for PBXProject "CircularView" */;
 			compatibilityVersion = "Xcode 3.2";
 			developmentRegion = English;
 			hasScannedForEncodings = 0;
@@ -200,6 +200,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				39E56C051DBD8D75008E027D /* Images.xcassets in Resources */,
 				3904646F1DAE923200623A92 /* LaunchScreen.storyboard in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -219,7 +220,6 @@
 				39BF49271DB3DADF00718D5C /* Item+CoreDataClass.swift in Sources */,
 				399A09171DB14127003E798D /* CollectionViewCell.swift in Sources */,
 				390464641DAE923200623A92 /* RootViewController.swift in Sources */,
-				39BF49201DB3D80F00718D5C /* DataModel.swift in Sources */,
 				390464771DAEB5F300623A92 /* CoreDataHelper.swift in Sources */,
 				39A129A61DB2954D005B8D8F /* Constants.swift in Sources */,
 				39BF49261DB3DADF00718D5C /* Type+CoreDataProperties.swift in Sources */,
@@ -338,12 +338,11 @@
 		390464741DAE923200623A92 /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CLANG_ENABLE_MODULES = YES;
 				DEVELOPMENT_TEAM = 62Z8B753FR;
 				INFOPLIST_FILE = CircullarView/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
-				PRODUCT_BUNDLE_IDENTIFIER = com.Anvil.CircullarView;
+				PRODUCT_BUNDLE_IDENTIFIER = com.Anvil.CircularView;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_OBJC_BRIDGING_HEADER = "CircullarView/CircullarView-Bridging-Header.h";
 				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
@@ -354,12 +353,11 @@
 		390464751DAE923200623A92 /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CLANG_ENABLE_MODULES = YES;
 				DEVELOPMENT_TEAM = 62Z8B753FR;
 				INFOPLIST_FILE = CircullarView/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
-				PRODUCT_BUNDLE_IDENTIFIER = com.Anvil.CircullarView;
+				PRODUCT_BUNDLE_IDENTIFIER = com.Anvil.CircularView;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_OBJC_BRIDGING_HEADER = "CircullarView/CircullarView-Bridging-Header.h";
 				SWIFT_VERSION = 3.0;
@@ -369,7 +367,7 @@
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
-		390464591DAE923100623A92 /* Build configuration list for PBXProject "CircullarView" */ = {
+		390464591DAE923100623A92 /* Build configuration list for PBXProject "CircularView" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				390464711DAE923200623A92 /* Debug */,

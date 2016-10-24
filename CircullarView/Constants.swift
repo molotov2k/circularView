@@ -14,6 +14,8 @@ struct Constants {
     static let bottonViewHeight: CGFloat = 40
     static let collectionViewRadius: CGFloat = 300
     static let navBarHeight: CGFloat = 60
+    static let initialOffset: CGFloat = -74 // magic number for current size, would appreciate if somebody can advice on math
+    static let offsetPerCell: CGFloat = 35 // magic number for current size, would appreciate if somebody can advice on math
     
     static let loaded = "loaded"
     static let typeEntity = "Type"

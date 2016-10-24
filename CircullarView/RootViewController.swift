@@ -19,10 +19,7 @@ class RootViewController: UITableViewController, UICollectionViewDataSource, UIC
     var collectionView: UICollectionView?
     
     var collectionHidden = true
-    var categories: [String] = []
-    
-    var initialOffset: CGFloat = -77 // magic number for current size, would appreciate if somebody can advice on math
-    var offsetPerCell: CGFloat = 35 // magic number for current size
+    var categories: [Type] = []
     
     var middleCategoriesElementIndex: Int {
         return self.categories.count / 2
@@ -33,7 +30,7 @@ class RootViewController: UITableViewController, UICollectionViewDataSource, UIC
     }
     
     var centeredOffset: CGFloat {
-        return self.initialOffset + self.offsetPerCell * CGFloat(self.middleCategoriesElementIndex)
+        return Constants.initialOffset + Constants.offsetPerCell * CGFloat(self.middleCategoriesElementIndex)
     }
     
     var middleViewableItemIndex: Int {
@@ -73,26 +70,26 @@ class RootViewController: UITableViewController, UICollectionViewDataSource, UIC
         self.setupTableView()
         self.setupBottomView()
         self.setupNavigationBar()
-
-        do {
-            try fetchedResultsController.performFetch()
-        } catch {
-            print("An error occurred")
-            
-        }
-    
     }
     
     
 // MARK - Table View
     
     override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+        //return self.categories[self.middleCategoriesElementIndex].items.count
         return 10
     }
     
     
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: Constants.cellReuseIdentifier, for: indexPath) as! TableViewCell
+        let items = self.categories[self.middleCategoriesElementIndex].items
+        let itemsArray = Array(items).sorted {$0.name < $1.name}
+        
+        //cell.label.text = itemsArray[indexPath.row].name
+        cell.nameLabel.text = itemsArray[0].name
+        cell.priceLabel.text = "$" + String(itemsArray[0].originalPrice)
+        
         return cell
     }
     
@@ -130,17 +127,25 @@ class RootViewController: UITableViewController, UICollectionViewDataSource, UIC
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         let cell = collectionView.dequeueReusableCell(withReuseIdentifier: Constants.collectionCellReuseIdentifier, for: indexPath as IndexPath) as! CollectionViewCell
         
-        let name = self.categories[indexPath.row]
+        let categoryImage = UIImage(data: self.categories[indexPath.row].image as! Data)
+        let tintableImage = categoryImage?.withRenderingMode(.alwaysTemplate)
+        cell.imageView.image = tintableImage
         
-        cell.label.text = String(name)
-        cell.label.adjustsFontSizeToFitWidth = true
+        
+        if indexPath.row != self.middleCategoriesElementIndex {
+            cell.imageView.tintColor = .cyan
+        } else {
+            cell.imageView.tintColor = .white
+        }
         
         return cell
     }
 
     
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
-        print("Selected row: \(indexPath.row), offset: \(collectionView.contentOffset.x)")
+        let selectedItemOffset = Constants.initialOffset + Constants.offsetPerCell * CGFloat(indexPath.row)
+        self.collectionView?.setContentOffset(CGPoint.init(x: selectedItemOffset, y: 0), animated: true)
+        self.hideController()
     }
     
     
@@ -155,7 +160,7 @@ class RootViewController: UITableViewController, UICollectionViewDataSource, UIC
     }
     
     
-    override func scrollViewDidEndDecelerating(_ scrollView: UIScrollView) {
+    override func scrollViewWillBeginDecelerating(_ scrollView: UIScrollView) {
         if scrollView == self.collectionView {
             self.scrollCollectionView()
         } else if scrollView == self.tableView {
@@ -166,7 +171,7 @@ class RootViewController: UITableViewController, UICollectionViewDataSource, UIC
     
     override func scrollViewDidEndScrollingAnimation(_ scrollView: UIScrollView) {
         if scrollView == self.collectionView {
-            let numberOfCellsScrolled = Int((self.centeredOffset - scrollView.contentOffset.x) / self.offsetPerCell)
+            let numberOfCellsScrolled = Int((self.centeredOffset - scrollView.contentOffset.x) / Constants.offsetPerCell)
             self.moveCategoriesElements(numberOfElementsToMove: numberOfCellsScrolled)
             self.collectionView?.reloadData()
             self.collectionView?.setContentOffset(CGPoint.init(x: self.centeredOffset, y: 0), animated: false)

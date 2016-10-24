@@ -10,7 +10,7 @@ import UIKit
 
 class CollectionViewCell: UICollectionViewCell {
     
-    var label = UILabel()
+    var imageView = UIImageView()
     
     
     required init?(coder aDecoder: NSCoder) {
@@ -20,14 +20,15 @@ class CollectionViewCell: UICollectionViewCell {
 
     override init(frame: CGRect) {
         super.init(frame: frame)
-        self.label.textAlignment = .center
-        self.contentView.addSubview(label)
+        self.contentView.addSubview(self.imageView)
     }
     
     
     override func layoutSubviews() {
         super.layoutSubviews()
-        self.label.frame = CGRect(x: 0, y: 0, width: self.bounds.width, height: self.bounds.height)
+        /* magic numbers, making imagesize smaller than cell size */
+        self.imageView.frame = CGRect(x: 10, y: 7, width: self.bounds.width - 10, height: self.bounds.height - 13)
+        self.imageView.contentMode = .scaleAspectFit
     }
 
     

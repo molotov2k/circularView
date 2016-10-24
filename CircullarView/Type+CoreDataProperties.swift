@@ -17,6 +17,7 @@ extension Type {
 
     @NSManaged public var name: String
     @NSManaged public var index: Int16
+    @NSManaged public var image: NSData?
     @NSManaged public var items: Set<Item>
 
 }

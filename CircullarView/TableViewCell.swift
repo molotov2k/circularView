@@ -10,14 +10,9 @@ import UIKit
 
 class TableViewCell: UITableViewCell {
     
-    var label = UILabel()
-    
-    
-    override init(style: UITableViewCellStyle, reuseIdentifier: String?) {
-        super.init(style: style, reuseIdentifier: reuseIdentifier)
-        self.label.backgroundColor = UIColor.yellow
-        self.contentView.addSubview(label)
-    }
+    var cellImageView = UIImageView()
+    var nameLabel = UILabel()
+    var priceLabel = UILabel()
     
     
     required init?(coder aDecoder: NSCoder) {
@@ -25,10 +20,41 @@ class TableViewCell: UITableViewCell {
     }
     
     
+    override init(style: UITableViewCellStyle, reuseIdentifier: String?) {
+        super.init(style: style, reuseIdentifier: reuseIdentifier)
+        self.contentView.addSubview(self.cellImageView)
+        self.contentView.addSubview(self.nameLabel)
+        self.contentView.addSubview(self.priceLabel)
+        
+    }
+    
+    
     override func layoutSubviews() {
         super.layoutSubviews()
-        self.label.frame = CGRect(x: 0, y: 0, width: self.bounds.width, height: self.bounds.height - 2)
+        let imageViewHeight = self.bounds.height - Constants.bottonViewHeight - 10
+        self.contentView.backgroundColor = .black
+        
+        self.cellImageView.frame = CGRect(x: 0,
+                                      y: 0,
+                                      width: self.bounds.width,
+                                      height: imageViewHeight)
+        self.cellImageView.backgroundColor = .green
+        
+        self.nameLabel.frame = CGRect(x: 10,
+                                      y: imageViewHeight + 10,
+                                      width: self.bounds.width / 2 - 10,
+                                      height: Constants.bottonViewHeight)
+        self.nameLabel.textColor = .white
+        self.nameLabel.textAlignment = .left
+        
+        self.priceLabel.frame = CGRect(x: self.bounds.width / 2 + 10,
+                                       y: imageViewHeight + 10,
+                                       width: self.bounds.width / 2 - 20,
+                                       height: Constants.bottonViewHeight)
+        self.priceLabel.textColor = .white
+        self.priceLabel.textAlignment = .right
     }
 
     
 }
+

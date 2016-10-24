@@ -33,23 +33,35 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     func generateTestData() {
         let coreDataHelper = CoreDataHelper()
         let context = coreDataHelper.persistentContainer.viewContext
+        
         let food = NSEntityDescription.insertNewObject(forEntityName: Constants.typeEntity, into: context) as! Type
         food.name = "Food"
+        food.image = NSData(data: UIImagePNGRepresentation(UIImage(named: "food128")!)!)
         food.index = 0
+        
         let beverages = NSEntityDescription.insertNewObject(forEntityName: Constants.typeEntity, into: context) as! Type
         beverages.name = "Beverages"
+        beverages.image = NSData(data: UIImagePNGRepresentation(UIImage(named: "drink128")!)!)
         beverages.index = 1
+        
         let tech = NSEntityDescription.insertNewObject(forEntityName: Constants.typeEntity, into: context) as! Type
         tech.name = "Tech"
+        tech.image = NSData(data: UIImagePNGRepresentation(UIImage(named: "gadget128")!)!)
         tech.index = 2
+        
         let fitness = NSEntityDescription.insertNewObject(forEntityName: Constants.typeEntity, into: context) as! Type
         fitness.name = "Fitness"
-        fitness.index = 3
+        fitness.image = NSData(data: UIImagePNGRepresentation(UIImage(named: "fitness128")!)!)
+        fitness.index = 4
+        
         let home = NSEntityDescription.insertNewObject(forEntityName: Constants.typeEntity, into: context) as! Type
         home.name = "Home"
-        home.index = 4
+        home.image = NSData(data: UIImagePNGRepresentation(UIImage(named: "home128")!)!)
+        home.index = 3
+        
         let other = NSEntityDescription.insertNewObject(forEntityName: Constants.typeEntity, into: context) as! Type
         other.name = "Other"
+        other.image = NSData(data: UIImagePNGRepresentation(UIImage(named: "other128")!)!)
         other.index = 5
         
         let greatFood = NSEntityDescription.insertNewObject(forEntityName: Constants.itemEntity, into: context) as! Item
