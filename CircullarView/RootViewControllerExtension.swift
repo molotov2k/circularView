@@ -99,6 +99,8 @@ extension RootViewController {
                                      height: self.view.bounds.height)
         self.tintView.backgroundColor = .gray
         self.tintView.alpha = 0.0
+        let gestureRecognizer = UITapGestureRecognizer(target: self, action:  #selector (self.hideController))
+        self.tintView.addGestureRecognizer(gestureRecognizer)
         self.view.addSubview(tintView)
     }
     
